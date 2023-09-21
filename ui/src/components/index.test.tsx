@@ -4,23 +4,23 @@ import App from './app/index'
 import { initializeState } from '../reducers'
 
 const mockSocket = () => {
-  const callbacks = {}
+  const callbacks:any = {}
   const mockEmit = jest.fn()
   return {
-    on: (eventName, callback) => {
-      if (!callbacks[eventName]) {
-        callbacks[eventName] = []
+    on: (eventName: string, callback: any) => {
+      if (!callbacks[eventName as keyof Object]) {
+        callbacks[eventName as keyof Object] = []
       }
-      callbacks[eventName].push(callback)
+      callbacks[eventName as keyof Object].push(callback)
     },
-    trigger: (eventName, data) => {
-      (callbacks[eventName] || []).forEach((callback) => { callback(data) })
+    trigger: (eventName: string, data: any) => {
+      (callbacks[eventName as keyof Object] || []).forEach((callback:any) => { callback(data) })
     },
     emit: mockEmit,
   }
 }
 
-const socket = mockSocket()
+const socket: any = mockSocket()
 const initialTestState = initializeState(socket)
 const testInputs = [
   {
