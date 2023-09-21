@@ -1,3 +1,4 @@
+import { Socket } from 'socket.io-client'
 import { BindingActions } from '../reducers/bindings/types'
 import { ScreenActions } from '../reducers/screens/types'
 import { ActionTypes, State } from '../reducers/types'
@@ -8,7 +9,7 @@ import { sendBindInput, sendUnbindInput } from '../socket'
  * triggered by user actions
  */
 const socketMiddleware = (
-  socket: SocketIOClient.Socket,
+  socket: Socket,
   state: State,
   action: ActionTypes
 ): void => {
