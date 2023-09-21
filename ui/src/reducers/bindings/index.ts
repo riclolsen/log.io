@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer';
 
 import { BindingActions, BindingState, BindingActionTypes } from './types'
 import { InputActions, InputState } from '../inputs/types'
