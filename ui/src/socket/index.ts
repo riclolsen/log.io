@@ -1,5 +1,6 @@
 import { Dispatch } from 'react'
 import socketIO from 'socket.io-client'
+import { Socket } from 'socket.io-client'
 import { InputActions } from '../reducers/inputs/types'
 import { MessageActions } from '../reducers/messages/types'
 import { ActionTypes } from '../reducers/types'
@@ -9,14 +10,14 @@ import { MessageEvent, PingEvent, RegistrationEvent } from './types'
 /**
  * Creates a new socket.io connection to the server
  */
-export const createSocket = (): SocketIOClient.Socket =>
+export const createSocket = (): Socket =>
   socketIO()
 
 /**
  * Receives a new input event and adds it to relevant state
  */
 export const registerNewInput = (
-  socket: SocketIOClient.Socket,
+  socket: Socket,
   dispatch: Dispatch<ActionTypes>
 ): void => {
   socket.on('+input', (input: RegistrationEvent) => {
@@ -25,7 +26,7 @@ export const registerNewInput = (
   })
 }
 
-export const unregisterNewInput = (socket: SocketIOClient.Socket): void => {
+export const unregisterNewInput = (socket: Socket): void => {
   socket.off('+input')
 }
 
@@ -33,7 +34,7 @@ export const unregisterNewInput = (socket: SocketIOClient.Socket): void => {
  * Receives a remove input event and removes it from relevant state
  */
 export const registerRemoveInput = (
-  socket: SocketIOClient.Socket,
+  socket: Socket,
   dispatch: Dispatch<ActionTypes>
 ): void => {
   socket.on('-input', (input: RegistrationEvent) => {
@@ -42,7 +43,7 @@ export const registerRemoveInput = (
   })
 }
 
-export const unregisterRemoveInput = (socket: SocketIOClient.Socket): void => {
+export const unregisterRemoveInput = (socket: Socket): void => {
   socket.off('-input')
 }
 
@@ -50,7 +51,7 @@ export const unregisterRemoveInput = (socket: SocketIOClient.Socket): void => {
  * Receives a ping event and updates input state
  */
 export const registerPing = (
-  socket: SocketIOClient.Socket,
+  socket: Socket,
   dispatch: Dispatch<ActionTypes>
 ): void => {
   socket.on('+ping', (input: PingEvent) => {
@@ -60,7 +61,7 @@ export const registerPing = (
   })
 }
 
-export const unregisterPing = (socket: SocketIOClient.Socket): void => {
+export const unregisterPing = (socket: Socket): void => {
   socket.off('+ping')
 }
 
@@ -68,7 +69,7 @@ export const unregisterPing = (socket: SocketIOClient.Socket): void => {
  * Receives a new message event and adds it to state
  */
 export const registerNewMessage = (
-  socket: SocketIOClient.Socket,
+  socket: Socket,
   dispatch: Dispatch<ActionTypes>
 ): void => {
   socket.on('+msg', (data: MessageEvent) => {
@@ -77,19 +78,19 @@ export const registerNewMessage = (
   })
 }
 
-export const unregisterNewMessage = (socket: SocketIOClient.Socket): void => {
+export const unregisterNewMessage = (socket: Socket): void => {
   socket.off('+msg')
 }
 
 export const sendBindInput = (
-  socket: SocketIOClient.Socket,
+  socket: Socket,
   inputName: string,
 ): void => {
   socket.emit('+activate', inputName)
 }
 
 export const sendUnbindInput = (
-  socket: SocketIOClient.Socket,
+  socket: Socket,
   inputName: string,
 ): void => {
   socket.emit('-activate', inputName)
