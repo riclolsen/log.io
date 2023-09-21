@@ -9,8 +9,9 @@ import urlMiddleware from '../middleware/url'
 import ScreenReducer, { initialScreenState } from './screens'
 import { ScreenActionTypes } from './screens/types'
 import { ActionTypes, State } from './types'
+import { Socket } from 'socket.io-client'
 
-export const initializeState = (socket: SocketIOClient.Socket): State => ({
+export const initializeState = (socket: Socket): State => ({
   bindings: initialBindingState,
   inputs: initialInputState,
   messages: initialMessageState,
