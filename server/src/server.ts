@@ -17,7 +17,7 @@ const UI_BUILD_PATH = process.env.LOGIO_SERVER_UI_BUILD_PATH
 async function handleNewMessage(
   config: ServerConfig,
   inputs: InputRegistry,
-  io: SocketIO.Server,
+  io: socketio.Server,
   msgParts: Array<string>,
 ): Promise<void> {
   const [mtype, stream, source] = msgParts.slice(0, 3)
@@ -44,7 +44,7 @@ async function handleNewMessage(
 async function handleRegisterInput(
   config: ServerConfig,
   inputs: InputRegistry,
-  io: SocketIO.Server,
+  io: socketio.Server,
   msgParts: Array<string>,
 ): Promise<void> {
   const [mtype, stream, source] = msgParts.slice(0, 3)
@@ -58,7 +58,7 @@ async function handleRegisterInput(
 async function handleDeregisterInput(
   config: ServerConfig,
   inputs: InputRegistry,
-  io: SocketIO.Server,
+  io: socketio.Server,
   msgParts: Array<string>,
 ): Promise<void> {
   const [mtype, stream, source] = msgParts.slice(0, 3)
@@ -79,7 +79,7 @@ const messageHandlers: MessageHandlers = {
 async function broadcastMessage(
   config: ServerConfig,
   inputs: InputRegistry,
-  io: SocketIO.Server,
+  io: socketio.Server,
   data: Buffer,
 ): Promise<void> {
   // Parse raw message into parts
@@ -108,7 +108,7 @@ async function main(config: ServerConfig): Promise<void> {
   // Create HTTP server w/ static file serving, socket.io bindings & basic auth
   const server = express()
   const httpServer = new http.Server(server)
-  const io = socketio(httpServer)
+  const io = new socketio.Server(httpServer, {})
   const inputs = new InputRegistry()
   if (config.basicAuth) {
     if (config.basicAuth.users && config.basicAuth.realm) {
@@ -137,7 +137,7 @@ See README for more examples.
   })
 
   // When a new browser connects, register stream activation events
-  io.on('connection', async (socket: SocketIO.Socket) => {
+  io.on('connection', async (socket: socketio.Socket) => {
     // Send existing inputs to browser
     inputs.getInputs().forEach((input) => {
       socket.emit('+input', input)
