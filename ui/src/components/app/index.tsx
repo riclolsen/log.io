@@ -13,10 +13,11 @@ import {
 } from '../../socket'
 
 import './styles.scss'
+import { Socket } from 'socket.io-client'
 
 interface AppProps {
   initialState: State,
-  socket: SocketIOClient.Socket,
+  socket: Socket,
 }
 
 /**
