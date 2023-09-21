@@ -1,21 +1,46 @@
-export const MessageActions = {
-  ADD_MESSAGE: 'ADD_MESSAGE' as 'ADD_MESSAGE',
-  CLEAR_MESSAGES: 'CLEAR_MESSAGES' as 'CLEAR_MESSAGES',
+export const InputActions = {
+  ENSURE_INPUT: 'ENSURE_INPUT' as 'ENSURE_INPUT',
+  PING: 'PING' as 'PING',
+  REMOVE_INPUT: 'REMOVE_INPUT' as 'REMOVE_INPUT',
 }
 
-export type MessageState = {
-  screens: { [screenId: string]: Array<string> },
+export type Input = {
+  name: string,
+  stream: string,
+  source: string,
+  ping: number | null,
 }
 
-export type AddMessageAction = {
-  type: typeof MessageActions.ADD_MESSAGE,
+export type Pairs = {
+  pairs: { [sourceName: string]: string },
+  ping: number | null,
+}
+
+export type InputState = {
+  inputs: { [inputName: string]: Input },
+  streams: { [streamName: string]: Pairs },
+  sources: { [sourceName: string]: Pairs },
+}
+
+export type EnsureInputAction = {
+  type: typeof InputActions.ENSURE_INPUT,
   inputName: string,
-  msg: string,
+  stream: string,
+  source: string,
 }
 
-export type ClearMessagesAction = {
-  type: typeof MessageActions.CLEAR_MESSAGES,
-  screenId: string,
+export type RemoveInputAction = {
+  type: typeof InputActions.REMOVE_INPUT,
+  inputName: string,
+  stream: string,
+  source: string,
 }
 
-export type MessageActionTypes = AddMessageAction | ClearMessagesAction
+export type PingAction = {
+  type: typeof InputActions.PING,
+  inputName: string,
+  stream: string,
+  source: string,
+}
+
+export type InputActionTypes = EnsureInputAction | PingAction | RemoveInputAction
